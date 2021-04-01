@@ -1,10 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 project(run_move_group)
 
-# Common cmake code applied to all moveit packages
-find_package(moveit_common REQUIRED)
-moveit_package()
-
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wpedantic)
 endif()
@@ -25,14 +21,20 @@ ament_target_dependencies(run_move_group
   Boost
 )
 
-install(TARGETS run_move_group
-  EXPORT export_${PROJECT_NAME}
-  LIBRARY DESTINATION lib
-  ARCHIVE DESTINATION lib
-  RUNTIME DESTINATION bin
-  INCLUDES DESTINATION include
+
+add_executable(run_move_group_oop src/run_move_group_oop.cpp)
+ament_target_dependencies(run_move_group_oop
+  moveit_ros_planning_interface
+  Boost
 )
-ament_export_targets(export_${PROJECT_NAME})
+
+install(TARGETS run_move_group
+  DESTINATION lib/${PROJECT_NAME}
+)
+
+install(TARGETS run_move_group_oop
+  DESTINATION lib/${PROJECT_NAME}
+)
 
 install(DIRECTORY launch
   DESTINATION share/${PROJECT_NAME}

@@ -159,7 +159,7 @@ def generate_launch_description():
 
     # load joint_state_controller
     load_joint_state_controller = ExecuteProcess(
-        cmd=["ros2 control load_start_controller joint_state_controller"],
+        cmd=["sleep 5; ros2 control load_start_controller joint_state_controller"],
         shell=True,
         output="screen",
     )
@@ -167,7 +167,7 @@ def generate_launch_description():
     # load panda_arm_controller
     load_controllers += [
         ExecuteProcess(
-            cmd=["ros2 control load_configure_controller panda_arm_controller"],
+            cmd=["sleep 5; ros2 control load_configure_controller panda_arm_controller"],
             shell=True,
             output="screen",
             on_exit=[
